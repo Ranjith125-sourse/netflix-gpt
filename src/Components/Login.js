@@ -1,18 +1,88 @@
 import React, { useState, useRef } from "react";
 import Header from "./Header";
 import { checkValidation } from "../utils/validate";
+import { auth } from "../utils/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const dispatch = useDispatch();
+
+  const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
 
   const handleButtonClick = () => {
-    
-    const message = checkValidation(email.current.value, password.current.value);
+    const message = checkValidation(
+      email.current?.value,
+      password.current?.value
+    );
     setErrorMessage(message);
+
+    if (message) return;
+
+    if (!isSignInForm) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current?.value,
+        password.current?.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          // console.log(user);
+          updateProfile(user, {
+            displayName: name.current?.value,
+            photoURL: "https://avatars.githubusercontent.com/u/127584976?v=4",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth?.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              console.log("updated form"+auth.currentUser);
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setErrorMessage(error.message);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user);
+          navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+    }
   };
 
   const toggleSignInForm = () => {
@@ -64,7 +134,10 @@ const Login = () => {
         >
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
-        <p className="py-4 cursor-pointer text-center" onClick={() => toggleSignInForm()}>
+        <p
+          className="py-4 cursor-pointer text-center"
+          onClick={() => toggleSignInForm()}
+        >
           {isSignInForm
             ? "New to netflix? Sign up now"
             : "Already registered? Sign in now"}
