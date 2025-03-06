@@ -1,8 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Header from "./Header";
+import { checkValidation } from "../utils/validate";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const handleButtonClick = () => {
+    
+    const message = checkValidation(email.current.value, password.current.value);
+    setErrorMessage(message);
+  };
 
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
@@ -17,7 +28,12 @@ const Login = () => {
           alt=""
         />
       </div>
-      <from className="text-white w-3/12 absolute bg-black p-12 mt-36 mx-auto right-0 left-0 rounded-lg bg-opacity-75">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className="text-white w-3/12 absolute bg-black p-12 mt-36 mx-auto right-0 left-0 rounded-lg bg-opacity-75"
+      >
         <h1 className="font-bold text-3xl py-5 ">
           {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>
@@ -30,25 +46,30 @@ const Login = () => {
           />
         )}
         <input
+          ref={email}
           type="text"
           placeholder="Email Address"
           className="p-2 my-3 w-full bg-gray-800 rounded-lg"
         />
         <input
+          ref={password}
           type="password"
           placeholder="Password"
           className="p-2 my-3 w-full bg-gray-800 rounded-lg"
         />
-        
-        <button className="p-2 my-4 bg-red-700 w-full rounded-lg">
+        <p className="text-red-600 text-center font-bold">{errorMessage}</p>
+        <button
+          className="p-2 my-4 bg-red-700 w-full rounded-lg"
+          onClick={() => handleButtonClick()}
+        >
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
-        <p className="py-4 cursor-pointer" onClick={() => toggleSignInForm()}>
+        <p className="py-4 cursor-pointer text-center" onClick={() => toggleSignInForm()}>
           {isSignInForm
             ? "New to netflix? Sign up now"
             : "Already registered? Sign in now"}
         </p>
-      </from>
+      </form>
     </div>
   );
 };
