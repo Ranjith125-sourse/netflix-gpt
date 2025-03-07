@@ -7,12 +7,11 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BG_IMAGE, USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
-  const navigate = useNavigate();
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -42,7 +41,7 @@ const Login = () => {
           // console.log(user);
           updateProfile(user, {
             displayName: name.current?.value,
-            photoURL: "https://avatars.githubusercontent.com/u/127584976?v=4",
+            photoURL: {USER_AVATAR},
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth?.currentUser;
@@ -55,7 +54,6 @@ const Login = () => {
                 })
               );
               console.log("updated form"+auth.currentUser);
-              navigate("/browse");
             })
             .catch((error) => {
               setErrorMessage(error.message);
@@ -75,7 +73,6 @@ const Login = () => {
         .then((userCredential) => {
           const user = userCredential.user;
           console.log(user);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -94,8 +91,8 @@ const Login = () => {
       <Header />
       <div className="absolute">
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/04ef06cc-5f81-4a8e-8db0-6430ba4af286/web/IN-en-20250224-TRIFECTA-perspective_3a9c67b5-1d1d-49be-8499-d179f6389935_large.jpg"
-          alt=""
+          src={BG_IMAGE}
+          alt="BackgroundImage"
         />
       </div>
       <form
