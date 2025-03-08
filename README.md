@@ -36,6 +36,10 @@
 - Foundout TMDB image cdn url
 - Made the browse page amazing with tailwind css
 - Created popular, top rated, treanding custom hooks
+- GPT search feature
+- GPT search bar
+- (Bonus) Multi lang feature 
+- Intigrate GPT API(get open ai)
 
 # Building Browser (Planing)
 - Main container
