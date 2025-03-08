@@ -30,6 +30,12 @@
 - Update the store with trailer video data
 - Embedded the youtube video and make it autoplay and mute
 - Added tailwind classes to make maincontainer look awesome
+- Build Secondary container
+- Movie list
+- Movie card
+- Foundout TMDB image cdn url
+- Made the browse page amazing with tailwind css
+- Created popular, top rated, treanding custom hooks
 
 # Building Browser (Planing)
 - Main container
@@ -38,6 +44,11 @@
 - Secondary container
   - Movies * n
   - Cards * n
+    - Secondary container
+      - Movielist - popular
+        - movieCard * n
+      - Movielist - Now playing
+      - Movielist - Trending
 
 
 # Features
