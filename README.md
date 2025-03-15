@@ -40,6 +40,14 @@
 - GPT search bar
 - (Bonus) Multi lang feature 
 - Intigrate GPT API(get open ai)
+- gpt search api call
+- Fetched gpt movieSuggestions from TMDB
+- Created Gpt slice and added data
+- Reused Movie list component to make movie suggestion container
+- Memorization
+- Adding .env file
+- Adding .env file to gitignore
+- Made our site responsive
 
 # Building Browser (Planing)
 - Main container

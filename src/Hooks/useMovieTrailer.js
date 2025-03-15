@@ -20,14 +20,16 @@ const useMovieTrailer = (movieId) => {
 
     const filterData = json.results.filter((video) => video.type === "Trailer");
     const movieTrailer =
-      filterData.length === 0 ? filterData[0] : json.results[0];
+      filterData.length > 0 ? filterData[0] : json.results[0];
     // console.log(movieTrailer);
     dispatch(addTrailerVideo(movieTrailer));
   };
 
   useEffect(() => {
-    !trailerVideo && getMovieVideos();
-  }, []);
+    if (!trailerVideo && movieId) {
+      getMovieVideos();
+    }
+  }, [movieId, trailerVideo, dispatch]);
 };
 
 export default useMovieTrailer;

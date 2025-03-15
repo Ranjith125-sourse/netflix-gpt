@@ -53,14 +53,15 @@ const Header = () => {
   }
 
   return (
-    <div className="absolute px-8 py-3 w-screen bg-gradient-to-b from-black z-10 flex justify-between">
+    //md for desktop sm for tabs default is for mobile
+    <div className="absolute px-8 py-3 w-screen bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between ">
       <img
-        className="w-44 transition-all duration-300 ease-in-out hover:scale-125"
+        className="w-44 mx-auto md:mx-0 transition-all duration-300 ease-in-out hover:scale-125"
         src={LOGO}
         alt="Logo"
       />
       {user && (
-        <div className="py-5 flex">
+        <div className="py-5 flex justify-between">
           {showGptSearch && <select className="p-2 bg-gray-500 text-white mx-2" onChange={handleLanguageChange}>
             {SUPPORTED_LANGUAGES.map((lang) => (
               <option key={lang.identifier} value={lang.identifier}>
@@ -76,7 +77,7 @@ const Header = () => {
             
           </button>
           <img
-            className="w-9 rounded-full"
+            className="w-9 rounded-full hidden md:block"
             alt="User icon"
             src={user?.photoURL}
           />

@@ -1,21 +1,20 @@
-import React from 'react'
-import GptSearchBar from './GptSearchBar'
-import GptMovieSuggession from './GptMovieSuggession'
-import { BG_IMAGE } from '../utils/constants'
+import React from "react";
+import GptSearchBar from "./GptSearchBar";
+import GptMovieSuggession from "./GptMovieSuggession";
+import { BG_IMAGE } from "../utils/constants";
 
 const GptSearch = () => {
   return (
-    <div className="w-screen">
+    <>
       <div className="fixed -z-10">
-        <img
-          src={BG_IMAGE}
-          alt="BackgroundImage"
-        />
+        <img className="h-screen object-cover md:w-screen" src={BG_IMAGE} alt="BackgroundImage" />
       </div>
-      <GptSearchBar />
-      <GptMovieSuggession />
-    </div>
-  )
-}
+      <div className="w-screen ">
+        <GptSearchBar />
+        <GptMovieSuggession />
+      </div>
+    </>
+  );
+};
 
-export default GptSearch
+export default GptSearch;
